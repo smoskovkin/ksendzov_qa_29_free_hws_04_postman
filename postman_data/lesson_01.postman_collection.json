@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "28300527-28e8-4d88-b6cf-7814861c19f6",
+		"name": "lesson_01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21054009"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseJsonData = pm.response.json()\r",
+							"let responseJsonDataToken = responseJsonData.token\r",
+							"\r",
+							"pm.environment.set(\"auth_token\", responseJsonDataToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resData = pm.response\r",
+							"let reqData = request\r",
+							"\r",
+							"console.log(resData)\r",
+							"console.log(reqData)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"let req = JSON.parse(request.data)\r",
+							"\r",
+							"let req_salary = req.salary\r",
+							"let salary_check_12 = req_salary *  2.9\r",
+							"let salary_12 = jsonData.qa_salary_after_12_months\r",
+							"\r",
+							"console.log(salary_check_12)\r",
+							"console.log(salary_12)\r",
+							"\r",
+							"\r",
+							"pm.test(\"salary_check_12\", function () {\r",
+							"    pm.expect(salary_12).to.eql(salary_check_12);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Alex\",\r\n    \"age\": 32,\r\n    \"salary\": 2000,\r\n    \"auth_token\": \"{{auth_token}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
